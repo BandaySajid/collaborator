@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborator | <%= pageTitle %>
+    </title>
+    <%- include('partials/bootstrap.ejs') %>
+        <style>
+            a {
+                text-decoration: none;
+                color: white;
+            }
+        </style>
+</head>
+
+<body>
+    <div id="alert-container"></div>
+
+    <div class="container my-4">
+        <div class="container text-center">
+            <h1 class="mb-4">Welcome to Collaborator</h1>
+            <button class="btn btn-success"><a href="/login"> Login</a></button>
+            <button class="btn btn-success"><a href="/signup"> Sign up</a></button>
+        </div>
+    </div>
+</body>
+
+</html>

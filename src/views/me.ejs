@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('partials/bootstrap.ejs') %>
+        <link rel="stylesheet" href="/css/code.css">
+        <title>Collaborator | <%= pageTitle %>
+        </title>
+        <style>
+
+        </style>
+</head>
+
+<body>
+    <div id="alert-container">
+
+    </div>
+    <div class="main" onmousemove="sendCursor(event)">
+        <div class="sidebar">
+
+            <!-- Buttons -->
+            <div class="sidebar-buttons">
+                <button onclick="saveCode(event)" class="side-button" id="save-btn">Save</button>
+                <button onclick="showInviteLink(event)" id="invite-button" class="side-button">Invite</button>
+            </div>
+            <!-- Invite link -->
+            <div class="invite-link" id="inviteLink">
+                <p id="url-link" target="_blank"></p>
+            </div>
+
+        </div>
+        <div class="right-section">
+            <div id="info"></div>
+
+            <div class="editor">
+                <pre id="code" contenteditable="true"><%- code %></pre>
+            </div>
+        </div>
+    </div>
+    <script src="/js/alert.js"></script>
+    <script src="/js/code.js"></script>
+
+</body>
+
+</html>
