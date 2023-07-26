@@ -9,7 +9,6 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import config from '../config.js';
 import cookieParser from 'cookie-parser';
-import { Code } from './models/index.js';
 
 let redis_client = redis.createClient({ host: config.redis.host, port: 6379 });
 
@@ -34,7 +33,6 @@ app.use(cookieParser(config.cookie.secret))
 // app.use(cors({
 //     origin: '*'
 // }));
-
 
 const maxAgeInSeconds = 2592000;
 
@@ -64,16 +62,20 @@ server.on('upgrade', async (request, socket, head) => {
     console.log('got an upgrade request');
 
     sessionMiddleware(request, {}, async () => {
+        try {
+            const isAuthenticated = request.session && request.session.isAuthenticated;
 
-        const isAuthenticated = request.session && request.session.isAuthenticated;
+            if (!isAuthenticated) {
+                return socket.destroy('user not authenticated');
+            };
 
-        if (!isAuthenticated) {
-            return socket.destroy('user not authenticated');
-        };
-
-        gateway.handleUpgrade(request, socket, head, function done(ws) {
-            ws.user = request.session.user;
-            gateway.emit('connection', ws, request);
-        });
+            gateway.handleUpgrade(request, socket, head, function done(ws) {
+                ws.user = request.session.user;
+                gateway.emit('connection', ws, request);
+            });
+        }
+        catch (err) {
+            console.log(`Error at connection upgrade:`, err.message ? err.message : err);
+        }
     });
 });
